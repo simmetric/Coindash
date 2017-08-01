@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "amd",
+        "target": "es5",
+        "sourceMap": true,
+        "outFile": "./js/dash.js",
+        "jsx" : "react"
+    },
+    "include": [
+        "./ts/definitions/*.ts",
+        "./ts/*.ts",        
+        "./ts/components/*.tsx"
+    ]
+}
