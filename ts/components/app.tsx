@@ -27,8 +27,6 @@ namespace dash.components {
 
         setDefaultFavoritePairs=() => {
             const defaultFavoritePairs = [
-                "XETHZEUR",
-                "XETHZUSD",
                 "XXBTZEUR",
                 "XXBTZUSD",
                 "XETHXXBT"
@@ -41,7 +39,7 @@ namespace dash.components {
             });
 
             this.updateFavorites();
-            this.ohlcTicker = setInterval(this.updateFavorites, 10000);
+            this.ohlcTicker = setInterval(this.updateFavorites, 20000);
 
             this.selectPair(this.state.favoritePairs[0]);
 
@@ -58,7 +56,7 @@ namespace dash.components {
             }
         }
 
-        public selectPair=(pairToSelect) => {
+        public selectPair=(pairToSelect: ICurrencyPair) => {
             this.setState({
                 activePair : pairToSelect
             });
@@ -66,13 +64,13 @@ namespace dash.components {
             this.render();
         }
 
-        public addPairToFavorites=(pairToAdd) => {
+        public addPairToFavorites=(pairToAdd: ICurrencyPair) => {
             this.state.favoritePairs.push(pairToAdd);
 
             this.render();
         }
 
-        public removePairFromFavorites=(pairToRemove) => {
+        public removePairFromFavorites=(pairToRemove: ICurrencyPair) => {
             this.setState({
                 activePair : this.state.activePair.name == pairToRemove.name ? null : this.state.activePair,
                 favoritePairs : this.state.favoritePairs.filter(pair => pair.name != pairToRemove.name)
@@ -161,7 +159,7 @@ namespace dash.components {
                         </div>                        
                     </div>
 
-                    <div className="ui menu">
+                    <div className="ui stackable menu">
                         {pairs}
                     </div>
 

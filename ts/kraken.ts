@@ -80,10 +80,7 @@ class Kraken {
             else {
                 return response.text();
             }
-        }).then(json => {
-            callback(json);
-        })
-        .catch(error => {
+        }).then(callback).catch(error => {
             console.error(error);
         });
     }

@@ -4,8 +4,8 @@
 namespace dash.components {
     export class Details extends React.Component<IDetailsProps, IDetailsState> {
 
-        chart : Highcharts.ChartObject;
-        refresh = (e) => {
+        chart: Highcharts.ChartObject;
+        refresh = () => {
             this.props.onRefresh();
         }
 
@@ -32,22 +32,33 @@ namespace dash.components {
         }
 
         drawOhlcChart = () => {
-            if(this.props.pair != null) {
+            let chartData = this.props.ohlc.intradayRecords;
+            let currentChartView = this.state != null ? this.state.chartView : ChartView.Intraday;
+            switch (currentChartView) {
+                case ChartView.Monthly:
+                    chartData = this.props.ohlc.weeklyRecords;
+                    break;
+                case ChartView.Weekly:
+                    chartData = this.props.ohlc.monthlyRecords;
+                    break;
+            }
+
+            if (this.props.pair != null) {
                 this.chart = new Highcharts.Chart({
                     title: {
                         text: ""
                     },
                     chart: {
-                        renderTo: "ohlcchart"
+                        renderTo: "chartarea"
                     },
                     series: [{
                         name: this.props.pair.altName + " price",
                         type: "ohlc",
-                        data: this.props.ohlc.intradayRecords
+                        data: chartData
                     }],
                     xAxis: {
-                        type : "datetime",
-                        minTickInterval : 1000
+                        type: "datetime",
+                        minTickInterval: 1000
                     },
                     yAxis: {
                         title: {
@@ -101,31 +112,31 @@ namespace dash.components {
                                 </div>
                             </div>
                             <div className="item">
-                                <button className="ui icon button" 
-                                    onClick={e => this.refresh(e)}>
+                                <button className="ui icon button"
+                                    onClick={() => this.refresh()}>
                                     <i className="refresh icon" id="detailloadicon"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="ui bordered tab active">
+                    <div className="ui bordered tab active" id="ohlcchart">
                         <div className="ui tiny buttons">
-                            <button id="intradayButton" className="tiny ui button" onClick={e => this.setChartView(ChartView.Intraday)}>
+                            <button id="intradayButton" className={this.state != null && this.state.chartView == ChartView.Intraday ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Intraday)}>
                                 Intraday
                             </button>
-                            <button id="tradesButton" className="tiny ui button" onClick={e => this.setChartView(ChartView.Weekly)}>
+                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.Weekly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Weekly)}>
                                 Weekly
                             </button>
-                            <button id="tradesButton" className="tiny ui button" onClick={e => this.setChartView(ChartView.Monthly)}>
+                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.Monthly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Monthly)}>
                                 Monthly
                             </button>
-                            <button id="tradesButton" className="tiny ui button" onClick={e => this.setChartView(ChartView.All)}>
+                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.All ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.All)}>
                                 All
                             </button>
                         </div>
                         <div className="ui divider"></div>
-                        <div id="ohlcchart"></div>
+                        <div id="chartarea"></div>
                     </div>
                     <div className="ui bordered tab" id="trades">
                         <h2>Recent trades in {this.props.pairName}</h2>

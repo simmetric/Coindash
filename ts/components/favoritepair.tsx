@@ -39,7 +39,7 @@ namespace dash.components {
                         displayDecimals={this.props.displayDecimals}
                     />
                     &nbsp;
-                    <i onClick={e => this.props.onRemoveFromFavorites() } className="remove icon"></i>
+                    <i onClick={e => this.props.onRemoveFromFavorites() } className="ui right floated large gray remove icon"></i>
                 </div>
             );
         }
