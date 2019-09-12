@@ -50,7 +50,9 @@ namespace dash.components {
                         minTickInterval : 1000
                     },
                     yAxis: {
-                        title: "Price"
+                        title: {
+                            text: "Price"
+                        }
                     }
                 });
             }

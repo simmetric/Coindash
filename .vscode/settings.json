@@ -1,3 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "appService.defaultWebAppToDeploy": "/subscriptions/1c15b5e8-5368-4056-9f3a-dc3f6d264922/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/coindash",
+    "appService.deploySubpath": ""
 }

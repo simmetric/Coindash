@@ -115,7 +115,6 @@ declare namespace React {
     // Top Level API
     // ----------------------------------------------------------------------
 
-    function createClass<P, S>(spec: ComponentSpec<P, S>): ClassicComponentClass<P>;
 
     function createFactory<P extends DOMAttributes<T>, T extends Element>(
         type: string): DOMFactory<P, T>;
@@ -178,7 +177,7 @@ declare namespace React {
     type ReactInstance = Component<any, any> | Element;
 
     // Base component for plain JS classes
-    class Component<P, S> implements ComponentLifecycle<P, S> {
+    class Component<P, S> {
         constructor(props?: P, context?: any);
         setState<K extends keyof S>(f: (prevState: S, props: P) => Pick<S, K>, callback?: () => any): void;
         setState<K extends keyof S>(state: Pick<S, K>, callback?: () => any): void;
@@ -246,41 +245,6 @@ declare namespace React {
         C &
         (new (props?: P, context?: any) => T) &
         (new (props?: P, context?: any) => { props: P });
-
-    //
-    // Component Specs and Lifecycle
-    // ----------------------------------------------------------------------
-
-    interface ComponentLifecycle<P, S> {
-        componentWillMount?(): void;
-        componentDidMount?(): void;
-        componentWillReceiveProps?(nextProps: Readonly<P>, nextContext: any): void;
-        shouldComponentUpdate?(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean;
-        componentWillUpdate?(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): void;
-        componentDidUpdate?(prevProps: Readonly<P>, prevState: Readonly<S>, prevContext: any): void;
-        componentWillUnmount?(): void;
-    }
-
-    interface Mixin<P, S> extends ComponentLifecycle<P, S> {
-        mixins?: Mixin<P, S>;
-        statics?: {
-            [key: string]: any;
-        };
-
-        displayName?: string;
-        propTypes?: ValidationMap<any>;
-        contextTypes?: ValidationMap<any>;
-        childContextTypes?: ValidationMap<any>;
-
-        getDefaultProps?(): P;
-        getInitialState?(): S;
-    }
-
-    interface ComponentSpec<P, S> extends Mixin<P, S> {
-        render(): ReactElement<any> | null;
-
-        [propertyName: string]: any;
-    }
 
     //
     // Event System

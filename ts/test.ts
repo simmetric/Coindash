@@ -21,7 +21,3 @@ class Test {
         clearInterval(this.CounterHolder);
     }
 }
-
-// var test = new Test("hoi");
-// test.showMessage();
-// test.showMessage();
