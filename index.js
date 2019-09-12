@@ -1,7 +1,7 @@
-import express, { static } from 'express';
+var express = require('express');
 var server = express();
 var options = {
     index: 'index.html'
 };
-server.use('/', static('/home/site/wwwroot', options));
+server.use('/', express.static(__dirname + '/', options));
 server.listen(process.env.PORT);
