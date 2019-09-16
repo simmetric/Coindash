@@ -156,7 +156,8 @@ namespace dash.components {
                         <div className="header item">
                             <i className="line chart icon"></i>
                             Coindash
-                        </div>                        
+                        </div>
+                        <div className="muted item"><p>Data comes live from the Kraken API</p></div>
                     </div>
 
                     <div className="ui stackable menu">
