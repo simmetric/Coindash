@@ -101,12 +101,9 @@ interface IDashModel {
     trades : { [key : string]: Array<ITrade>};
     subscribers : {[event: string]: Array<any>};
     initialize();
-    loadCurrencies(jsonData);
-    loadPairs(jsonData);
-    getIntradayOhlc(pair);
-    loadIntradayOhlc(jsonData);
-    getTrades(pair);
-    loadTrades(jsonData);
+    getIntradayOhlc(pair: ICurrencyPair);
+    getWeeklyOhlc(pair: ICurrencyPair);
+    getTrades(pair: ICurrencyPair);
     subscribe(callback : any, event? : string);
     notify(event? : string);
 }

@@ -19,7 +19,7 @@ class Kraken {
         if (this.callCount > 0) this.callCount--;
     }
 
-    canMakeCall = (callCost) => {
+    canMakeCall = (callCost: number) => {
         if (this.callCount + callCost < this.callMax) {
             this.callCount += callCost;
             return true;
@@ -28,60 +28,50 @@ class Kraken {
         return false;
     }
 
-    getCurrencies = (callback) => {
-        this.makeCall(
-            "Assets",
-            callback
+    getCurrencies = () => {
+        return this.makeCall("Assets");
+    }
+
+    getTradeablePairs = () => {
+        return this.makeCall("AssetPairs");
+    }
+
+    getOhlc = (pair: ICurrencyPair, since: number, interval: number = 15) => {
+        return this.makeCall(
+            "OHLC?pair=" + pair.name + "&interval=" + interval + ((since != null) ? "&since=" + since : "")
         );
     }
 
-    getTradeablePairs = (callback) => {
-        this.makeCall(
-            "AssetPairs",
-            callback
+    getTrades = (pair: ICurrencyPair, since: number) => {
+        return this.makeCall(
+            "Trades?pair=" + pair.name + "&interval=15" + ((since != null) ? "&since=" + since : "")
         );
     }
 
-    getOhlc = (pair, since, interval = 15, callback) => {
-        this.makeCall(
-            "OHLC?pair=" + pair.name + "&interval=" + interval + ((since != null) ? "&since=" + since : ""),
-            callback
-        );
-    }
-
-    getTrades = (pair, since, callback) => {
-        this.makeCall(
-            "Trades?pair=" + pair.name + "&interval=15" + ((since != null) ? "&since=" + since : ""),
-            callback
-        );
-    }
-
-    private makeCall(relativeUrl, callback) {
+    private async makeCall(relativeUrl: string) {
         while (!this.canMakeCall(DefaultCallCost)) { }
 
         console.log(relativeUrl + " (" + this.callCount + ")");
 
-        var url = new URL(relativeUrl, this.baseUri);
-
         var script = document.createElement("script");
         script.src = this.baseUri + relativeUrl
 
-        fetch(this.proxyUri + encodeURI(this.baseUri + relativeUrl), {
-            headers: new Headers(
-                {
+        try {
+            const response = await fetch(this.proxyUri + encodeURI(this.baseUri + relativeUrl), {
+                headers: new Headers({
                     "Accept": "application/json",
                     "Authorization": "Basic NWE0YTY2OGEzMGUwNGVhMWI0OThjYTdkODMyYmEyZjc6NzJmMDYzYzllNzU4NDIyN2FmMTIwZmE3NzA4NjI4MTc="
-                }
-            )
-        }).then(response => {
+                })
+            });
             if (response.ok) {
                 return response.json();
             }
             else {
                 return response.text();
             }
-        }).then(callback).catch(error => {
+        }
+        catch (error) {
             console.error(error);
-        });
+        }
     }
 }

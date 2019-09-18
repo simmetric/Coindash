@@ -3,6 +3,7 @@
         "allowJs": true,
         "module": "amd",
         "target": "es5",
+        "lib": [ "dom", "es2015" ],
         "sourceMap": true,
         "outFile": "./js/dash.js",
         "jsx" : "react"
