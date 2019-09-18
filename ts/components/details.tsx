@@ -3,6 +3,10 @@
 
 namespace dash.components {
     export class Details extends React.Component<IDetailsProps, IDetailsState> {
+        constructor() {
+            super();
+            this.setChartView(ChartView.Intraday);
+        }
 
         chart: Highcharts.ChartObject;
         refresh = () => {
@@ -36,10 +40,10 @@ namespace dash.components {
             let currentChartView = this.state != null ? this.state.chartView : ChartView.Intraday;
             switch (currentChartView) {
                 case ChartView.Monthly:
-                    chartData = this.props.ohlc.weeklyRecords;
+                    chartData = this.props.ohlc.monthlyRecords;
                     break;
                 case ChartView.Weekly:
-                    chartData = this.props.ohlc.monthlyRecords;
+                    chartData = this.props.ohlc.weeklyRecords;
                     break;
             }
 
@@ -78,6 +82,8 @@ namespace dash.components {
         }
 
         render() {
+            let currentChartView = this.state != null ? this.state.chartView : ChartView.Intraday;
+
             var tradeList = this.props.trades.map(trade => {
                 return (
                     <tr>
@@ -122,16 +128,16 @@ namespace dash.components {
 
                     <div className="ui bordered tab active" id="ohlcchart">
                         <div className="ui tiny buttons">
-                            <button id="intradayButton" className={this.state != null && this.state.chartView == ChartView.Intraday ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Intraday)}>
+                            <button id="intradayButton" className={currentChartView == ChartView.Intraday ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Intraday)}>
                                 Intraday
                             </button>
-                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.Weekly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Weekly)}>
+                            <button id="tradesButton" className={currentChartView == ChartView.Weekly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Weekly)}>
                                 Weekly
                             </button>
-                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.Monthly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Monthly)}>
+                            <button id="tradesButton" className={currentChartView == ChartView.Monthly ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.Monthly)}>
                                 Monthly
                             </button>
-                            <button id="tradesButton" className={this.state != null && this.state.chartView == ChartView.All ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.All)}>
+                            <button id="tradesButton" className={currentChartView == ChartView.All ? "tiny active ui button" : "tiny ui button"} onClick={e => this.setChartView(ChartView.All)}>
                                 All
                             </button>
                         </div>

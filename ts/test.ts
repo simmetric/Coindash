@@ -1,7 +1,7 @@
 class Test {
     private Counter = 0;
     private Message: string;
-    private CounterHolder;
+    private CounterHolder: number;
 
     constructor(message: string) {
         this.Message = message;

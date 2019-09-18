@@ -25,7 +25,6 @@ namespace dash.components {
         }
 
         render() {
-            var selectionIndicator = null;
             var selectionClass = ((this.props.isActive) ? "primary active " : "") + 
                 "link item";
 

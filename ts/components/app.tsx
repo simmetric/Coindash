@@ -34,7 +34,7 @@ namespace dash.components {
 
             this.props.model.pairs.forEach((pair) => {
                 if (defaultFavoritePairs.some((favorite)=>favorite == pair.name)) {
-                    this.state.favoritePairs.push(pair);
+                    this.addPairToFavorites(pair);
                 }
             });
 
@@ -66,7 +66,7 @@ namespace dash.components {
 
         public addPairToFavorites=(pairToAdd: ICurrencyPair) => {
             this.state.favoritePairs.push(pairToAdd);
-
+            this.props.model.getWeeklyOhlc(pairToAdd);
             this.render();
         }
 
