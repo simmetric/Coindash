@@ -62,7 +62,9 @@ namespace dash.model {
                 var baseCurrency = this.currencies.filter((cur) => cur.name == pair.base)[0];
                 var quoteCurrency = this.currencies.filter((cur) => cur.name == pair.quote)[0];
 
-                if (key.indexOf(".d") < 0) {
+                if (key.indexOf(".d") < 0 &&
+                    baseCurrency &&
+                    quoteCurrency) {
                     this.pairs.push({
                         name: key,
                         altName: baseCurrency.altName + " / " + quoteCurrency.altName,
