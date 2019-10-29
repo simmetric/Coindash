@@ -48,6 +48,9 @@ namespace dash.components {
             }
 
             if (this.props.pair != null) {
+                if (this.chart != null) {
+                    this.chart.destroy();
+                }
                 this.chart = new Highcharts.Chart({
                     title: {
                         text: ""

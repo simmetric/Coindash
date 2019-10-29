@@ -114,7 +114,8 @@ namespace dash.model {
             var key = Object.keys(jsonData.result)[0];
 
             if (jsonData.result[key].length > 0) {
-                jsonData.result[key].forEach(record => {
+                this.ohlc[key].intradayRecords.splice(0, jsonData.result[key].length)
+                jsonData.result[key].forEach((record) => {
                     this.ohlc[key].intradayRecords.push([
                         parseFloat(record[0]) * 1000,
                         parseFloat(record[1]),
@@ -122,6 +123,16 @@ namespace dash.model {
                         parseFloat(record[3]),
                         parseFloat(record[4])
                     ]);
+                });
+
+                this.ohlc[key].intradayRecords = this.ohlc[key].intradayRecords.sort((a, b) => {
+                    if (a < b) {
+                        return -1;
+                    }
+                    else if (a > b) {
+                        return 1;
+                    }
+                    return 0;
                 });
 
                 this.ohlc[key].previous = this.ohlc[key].current;
@@ -157,7 +168,7 @@ namespace dash.model {
                 pairToSelect,
                 this.trades[pairToSelect.name].length ?
                     this.trades[pairToSelect.name][this.trades[pairToSelect.name].length - 1].time.getTime() / 1000 : null,
-                );
+            );
             this.loadTrades(json);
         }
 

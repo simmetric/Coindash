@@ -8,7 +8,7 @@ class Kraken {
     private callCount = 0;
     private callMax = 15;
     private callUpdater: number;
-    private proxyUri = "https://krakenproxy.azurewebsites.net/proxy/?url=";
+    private proxyUri = "https://corsbuster.azurewebsites.net/proxy/?url=";
     private baseUri = "https://api.kraken.com/0/public/";
 
     constructor() {
@@ -60,7 +60,7 @@ class Kraken {
             const response = await fetch(this.proxyUri + encodeURI(this.baseUri + relativeUrl), {
                 headers: new Headers({
                     "Accept": "application/json",
-                    "Authorization": "Basic NWE0YTY2OGEzMGUwNGVhMWI0OThjYTdkODMyYmEyZjc6NzJmMDYzYzllNzU4NDIyN2FmMTIwZmE3NzA4NjI4MTc="
+                    "X-API-KEY": "c460885953462ea28403c296b998f7b9"
                 })
             });
             if (response.ok) {
