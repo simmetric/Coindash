@@ -60,7 +60,7 @@ class Kraken {
             const response = await fetch(this.proxyUri + encodeURI(this.baseUri + relativeUrl), {
                 headers: new Headers({
                     "Accept": "application/json",
-                    "X-API-KEY": "c460885953462ea28403c296b998f7b9"
+                    "X-API-KEY": "34ytbvg34qb6g3vt1rt3"
                 })
             });
             if (response.ok) {
